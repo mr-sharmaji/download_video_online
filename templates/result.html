@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.png') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        Ultimate Video Downloader
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--  Social tags-->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--     Fonts and icons-->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    {#    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/font-awesome.min.css') }}">#}
+    <script src="https://kit.fontawesome.com/7e5b966a69.js" crossorigin="anonymous"></script>
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/material-kit.mind1f1.css') }}" rel="stylesheet"/>
+</head>
+<body>
+{% if wtpt=='wt' %}
+    <h1>{{ yt.title }}</h1>
+    <img src="https://img.youtube.com/vi/{{ yt.video_id }}/maxresdefault.jpg" alt="">
+    {% for i in yt.streams.filter(progressive=True).all() %}
+        <h1>{{ i }}</h1>
+        <h1>{{ i.itag }}</h1>
+        <h1>{{ i.mime_type }}</h1>
+        <h1>{{ i.resolution }}</h1>
+        <h1>{{ i.fps }}</h1>
+        <h1>{{ i.video_codec }}</h1>
+        <h1>{{ i.audio_codec }}</h1>
+    {% endfor %}
+    <form action="{{ url_for('download_page') }}" method="POST">
+        <label>
+            <input type="text" class="form-control" placeholder="copy the Stream you want to download" name="download">
+        </label>
+        <input type=submit value=Search class="btn btn-primary btn-round btn-lg">
+    </form>
+{% elif wtpt=='pt' %}
+    {% for x,y in streamListDictList %}
+        <h4>{{ x }}</h4>
+        <h4>{{ y.title }}</h4>
+        <img src="https://img.youtube.com/vi/{{ y.video_id }}/maxresdefault.jpg" alt="">
+        {% for i in y.streams.filter(progressive=True).all() %}
+            <h1>{{ i }}</h1>
+            <h1>{{ i.itag }}</h1>
+            <h1>{{ i.mime_type }}</h1>
+            <h1>{{ i.resolution }}</h1>
+            <h1>{{ i.fps }}</h1>
+            <h1>{{ i.video_codec }}</h1>
+            <h1>{{ i.audio_codec }}</h1>
+        {% endfor %}
+    {% endfor %}
+    <form action="{{ url_for('download_page') }}" method="POST">
+        <label>
+            <input type="text" class="form-control" placeholder="copy the Stream you want to download" name="downloadItag">
+        </label>
+        <input type=submit value=Download name="download" class="btn btn-primary btn-round btn-lg">
+        <input type=submit value="Download All" name="download" class="btn btn-primary btn-round btn-lg">
+    </form>
+{% else %}
+    <h1>ERROR</h1>
+{% endif %}
+<!--   Core JS Files   -->
+<script src="{{ url_for('static',filename='assets/js/core/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='assets/js/core/popper.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='assets/js/core/bootstrap-material-design.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ url_for('static',filename='assets/js/plugins/moment.min.js') }}"></script>
+</body>
+</html>
