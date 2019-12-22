@@ -37,7 +37,9 @@
     {% endfor %}
     <form action="{{ url_for('download_page') }}" method="POST">
         <label>
-            <input type="text" class="form-control" placeholder="copy the Stream you want to download" name="download">
+            {% for i in yt.streams.filter(progressive=True).all() %}
+            <input type="radio" class="form-control" value="{{ i.itag }}" name="download">{{ i.resolution }},{{ i.file_extension }}
+            {% endfor %}
         </label>
         <input type=submit value=Search class="btn btn-primary btn-round btn-lg">
     </form>
@@ -57,9 +59,13 @@
         {% endfor %}
     {% endfor %}
     <form action="{{ url_for('download_page') }}" method="POST">
-        <label>
-            <input type="text" class="form-control" placeholder="copy the Stream you want to download" name="downloadItag">
-        </label>
+            {% for x,y in streamListDictList %}
+                <label>{{ x }}
+                {% for i in y.streams.filter(progressive=True).all() %}
+                    <input type="radio" class="form-control" name="downloadItag" value="{{ x }}, {{ i.itag }}">{{ i.resolution }},{{ i.subtype }}
+                {% endfor %}
+                </label>
+            {% endfor %}
         <input type=submit value=Download name="download" class="btn btn-primary btn-round btn-lg">
         <input type=submit value="Download All" name="download" class="btn btn-primary btn-round btn-lg">
     </form>

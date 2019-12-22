@@ -55,11 +55,14 @@ def download_page():
         elif pt in gurl_dw:
             print(request.form['download'])
             if request.form["download"] == "Download":
-                download_itag_wt = request.form['downloadItag']
-                get_watch_stream(gurl_dw).streams.get_by_itag(download_itag_wt).download()
+                download_itag_url_wt = request.form['downloadItag']
+                download_itag_url_wt_list = download_itag_url_wt.split(", ")
+                download_itag = download_itag_url_wt_list[1]
+                download_url = download_itag_url_wt_list[0]
+                get_watch_stream(download_url).streams.get_by_itag(download_itag).download()
                 return render_template('download.html', wtpt='pt')
             elif request.form["download"] == "Download All":
-                get_playlist_urls(gurl_dw).download_all()
+                # get_playlist_urls(gurl_dw).download_all()
                 return render_template('download.html', wtpt='pt')
     else:
         return render_template('index.html', eval=1)
