@@ -23,60 +23,248 @@
     <link href="{{ url_for('static', filename='assets/css/material-kit.mind1f1.css') }}" rel="stylesheet"/>
 </head>
 <body>
+
+<nav class="navbar navbar-color-on-scroll navbar-light fixed-top  navbar-expand-lg " color-on-scroll="100"
+     id="sectionsNav">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="font-weight-bold navbar-brand text-center text-capitalize" href="index.html">
+                Ultimate Video Downloader </a>
+        </div>
+    </div>
+</nav>
+
 {% if wtpt=='wt' %}
-    <h1>{{ yt.title }}</h1>
-    <img src="https://img.youtube.com/vi/{{ yt.video_id }}/maxresdefault.jpg" alt="">
-    {% for i in yt.streams.filter(progressive=True).all() %}
-        <h1>{{ i }}</h1>
-        <h1>{{ i.itag }}</h1>
-        <h1>{{ i.mime_type }}</h1>
-        <h1>{{ i.resolution }}</h1>
-        <h1>{{ i.fps }}</h1>
-        <h1>{{ i.video_codec }}</h1>
-        <h1>{{ i.audio_codec }}</h1>
-    {% endfor %}
-    <form action="{{ url_for('download_page') }}" method="POST">
-        <label>
-            {% for i in yt.streams.filter(progressive=True).all() %}
-            <input type="radio" class="form-control" value="{{ i.itag }}" name="download">{{ i.resolution }},{{ i.file_extension }}
-            {% endfor %}
-        </label>
-        <input type=submit value=Search class="btn btn-primary btn-round btn-lg">
-    </form>
+    <div class="page-header header-filter" data-parallax="true"
+         style="background-image: url('https://img.youtube.com/vi/{{ yt.video_id }}/maxresdefault.jpg'); height: 600px"></div>
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 ml-auto mr-auto">
+                        <div class="profile">
+                            <div class="name">
+                                <h3 class="title">{{ yt.title }}</h3>
+                                <h4 class="title text-capitalize"><i class="far fa-eye"></i> {{ yt.views }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="description text-center">
+                    <h5 class="text-dark text-lg-center"> {{ yt.description }} </h5>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-8 ml-auto mr-auto">
+                <div class="section-description">
+                    <h2 class="title text-center">Download Section</h2>
+                    <h5 class="description text-dark text-center">Select Your Resolution quality and click on the
+                        download button</h5>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 ml-auto mr-auto justify-content-center">
+                    <div class="info info-horizontal">
+                        <div class="form-check content-center">
+                            <form action="{{ url_for('download_page') }}" method="POST">
+                                {% for i in yt.streams.filter(only_audio=False,only_video=False,subtype='mp4').all() %}
+                                    {% if i.audio_codec==None %}
+                                        {% if i.resolution!=None %}
+                                            <label class="form-check-label">
+                                                <input style="display: inline;" class="form-check-input" type="radio"
+                                                       value="{{ i.itag }}" name="download" required>
+                                                <h5 class="text-dark"
+                                                    style="display: inline;"> {{ i.resolution }}, {{ i.subtype }} </h5>
+                                                <i
+                                                        class="fas fa-volume-mute text-danger"></i>
+                                                <span class="circle"><span class="check"></span></span>
+                                            </label>
+                                            <br>
+                                            <br>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if i.resolution!=None %}
+                                            <label class="form-check-label">
+                                                <input style="display: inline;" class="form-check-input" type="radio"
+                                                       value="{{ i.itag }}" name="download" required>
+                                                <h5 class="text-dark"
+                                                    style="display: inline;"> {{ i.resolution }}, {{ i.subtype }}</h5>
+                                                <i class="fas fa-volume-up text-success"></i>
+                                                <span class="circle"><span class="check"></span></span>
+                                            </label>
+                                            <br>
+                                            <br>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <input type=submit value=Download class="btn btn-primary btn-round btn-lg">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% elif wtpt=='pt' %}
-    {% for x,y in streamListDictList %}
-        <h4>{{ x }}</h4>
-        <h4>{{ y.title }}</h4>
-        <img src="https://img.youtube.com/vi/{{ y.video_id }}/maxresdefault.jpg" alt="">
-        {% for i in y.streams.filter(progressive=True).all() %}
-            <h1>{{ i }}</h1>
-            <h1>{{ i.itag }}</h1>
-            <h1>{{ i.mime_type }}</h1>
-            <h1>{{ i.resolution }}</h1>
-            <h1>{{ i.fps }}</h1>
-            <h1>{{ i.video_codec }}</h1>
-            <h1>{{ i.audio_codec }}</h1>
-        {% endfor %}
-    {% endfor %}
-    <form action="{{ url_for('download_page') }}" method="POST">
+    <div id="carouselExampleIndicators " data-parallax="true" class="slide header-filter" data-ride="carousel"
+         data-interval="3000">
+        <div class="carousel-inner">
             {% for x,y in streamListDictList %}
-                <label>{{ x }}
-                {% for i in y.streams.filter(progressive=True).all() %}
-                    <input type="radio" class="form-control" name="downloadItag" value="{{ x }}, {{ i.itag }}">{{ i.resolution }},{{ i.subtype }}
-                {% endfor %}
-                </label>
+                {% if loop.first %}
+                    <div class="carousel-item active">
+                        <img class="" src="https://img.youtube.com/vi/{{ y.video_id }}/maxresdefault.jpg"
+                             style="width: 100%; height: 600px"
+                             alt="First slide">
+                    </div>
+                {% else %}
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="https://img.youtube.com/vi/{{ y.video_id }}/maxresdefault.jpg"
+                             style="width: 100%; height: 600px"
+                             alt="First slide">
+                    </div>
+                {% endif %}
             {% endfor %}
-        <input type=submit value=Download name="download" class="btn btn-primary btn-round btn-lg">
-        <input type=submit value="Download All" name="download" class="btn btn-primary btn-round btn-lg">
-    </form>
+        </div>
+    </div>
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="title text-center">Videos In The Playlist</h1>
+                    </div>
+                    <div class="col-lg-12 col-md-12 ml-auto mr-auto">
+                        <div class="table-responsive">
+                            <table class="table table-shopping">
+                                <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th>Videos</th>
+                                    <th class="th-description text-right">Views</th>
+                                    <th class="text-right">Download</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for x,y in streamListDictList %}
+                                    <tr>
+                                        <td>
+                                            <div class="img-container">
+                                                <img src="https://img.youtube.com/vi/{{ y.video_id }}/maxresdefault.jpg"
+                                                     alt="...">
+                                            </div>
+                                        </td>
+                                        <td class="td-name">
+                                            {{ y.title }}
+                                        </td>
+                                        <td class="text-center text-dark">
+                                            <i class="far fa-eye"></i> {{ y.views }}
+                                        </td>
+                                        <td class="td-number text-center">
+                                            <form action="{{ url_for('download_page') }}" method="POST">
+                                                <label class="form-check-label">
+                                                    {% for i in y.streams.filter(progressive=True).all() %}
+                                                        <input style="display: inline;" type="radio"
+                                                               class="form-check-input" name="downloadItag"
+                                                               value="{{ x }}, {{ i.itag }}" required>
+                                                        <h5 class="text-dark"
+                                                            style="display: inline;"> {{ i.resolution }}, {{ i.subtype }} </h5>
+                                                        <i
+                                                                class="fas fa-volume-up text-success"></i>
+                                                        <span class="circle"><span class="check"></span></span>
+                                                        </label>
+                                                        <br>
+                                                        <br>
+                                                    {% endfor %}
+                                                <input type=submit value=Download name="download"
+                                                       class="btn btn-primary btn-round btn-lg">
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="3">
+                                    </td>
+                                    <td colspan="3" class="text-right">
+                                        <input type=submit value="Download All" name="download"
+                                               class="btn btn-primary btn-round btn-lg"><i
+                                            class="material-icons">
+                                    </i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#    {% for x,y in streamListDictList %}#}
+    {#        <h4>{{ x }}</h4>#}
+    {#        <h4>{{ y.title }}</h4>#}
+    {#        <img src="https://img.youtube.com/vi/{{ y.video_id }}/maxresdefault.jpg" alt="">#}
+    {#        {% for i in y.streams.filter(progressive=True).all() %}#}
+    {#            <h1>{{ i }}</h1>#}
+    {#            <h1>{{ i.itag }}</h1>#}
+    {#            <h1>{{ i.mime_type }}</h1>#}
+    {#            <h1>{{ i.resolution }}</h1>#}
+    {#            <h1>{{ i.fps }}</h1>#}
+    {#            <h1>{{ i.video_codec }}</h1>#}
+    {#            <h1>{{ i.audio_codec }}</h1>#}
+    {#        {% endfor %}#}
+    {#    {% endfor %}#}
+    {#    <form action="{{ url_for('download_page') }}" method="POST">#}
+    {#        {% for x,y in streamListDictList %}#}
+    {#            <label>{{ x }}#}
+    {#                {% for i in y.streams.filter(progressive=True).all() %}#}
+    {#                    <input type="radio" class="form-control" name="downloadItag" value="{{ x }}, {{ i.itag }}">#}
+    {#                    {{ i.resolution }},{{ i.subtype }}#}
+    {#                {% endfor %}#}
+    {#            </label>#}
+    {#        {% endfor %}#}
+    {#        <input type=submit value=Download name="download" class="btn btn-primary btn-round btn-lg">#}
+    {#        <input type=submit value="Download All" name="download" class="btn btn-primary btn-round btn-lg">#}
+    {#    </form>#}
 {% else %}
     <h1>ERROR</h1>
 {% endif %}
+
+<footer class="footer footer-default">
+    <div class="container">
+        <nav class="float-left">
+            <ul>
+                <li>
+                    <a href="">
+                        Ultimate Video Downloader
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="copyright float-right">
+            &copy;
+            <script>
+                document.write(new Date().getFullYear().toString())
+            </script>
+            <i class="material-icons">favorite</i>
+            <a href="" target="_blank">Subham Sharma</a>
+        </div>
+    </div>
+</footer>
+
 <!--   Core JS Files   -->
 <script src="{{ url_for('static',filename='assets/js/core/jquery.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='assets/js/core/popper.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='assets/js/core/bootstrap-material-design.min.js') }}"
         type="text/javascript"></script>
 <script src="{{ url_for('static',filename='assets/js/plugins/moment.min.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/js/material-kit.mind1f1.js?v=2.2.0') }}"
+        type="text/javascript"></script>
+<script src="{{ url_for('static',filename='assets/demo/modernizr.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='assets/demo/vertical-nav.js') }}" type="text/javascript"></script>
 </body>
 </html>
