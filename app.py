@@ -38,8 +38,8 @@ def result_page():
         if wtw[0] in url_dw or wtw[1] in url_dw:
             try:
                 yt = get_watch_stream(url_dw)
-            except KeyError:
-                return render_template('index.html', eval=1)
+            # except KeyError:
+            #     return render_template('index.html', eval=1)
             except pytube.exceptions.RegexMatchError:
                 return render_template('index.html', eval=1)
             return render_template('result.html', yt=yt, wtpt='wt')
