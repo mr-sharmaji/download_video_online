@@ -32,11 +32,10 @@ def result_page():
     if request.method == 'POST':
         url_dw = request.form['url']
         gurl_dw = url_dw
-        wtw = ['https://www.youtube.com/watch', 'https://m.youtube.com/watch']
-        wtm = 'https://youtu.be'
-        pl = 'https://www.youtube.com/playlist'
+        wtw = ['www.youtube.com/watch', 'm.youtube.com/watch']
+        wtm = 'youtu.be'
+        pl = 'www.youtube.com/playlist'
         if wtw[0] in url_dw or wtw[1] in url_dw:
-
             try:
                 yt = get_watch_stream(url_dw)
             except KeyError:
@@ -84,9 +83,9 @@ def download_page():
     wtpt = ''
     fileName = time.strftime("%d%m%Y-%H%M%S")
     if request.method == 'POST':
-        wtw = ['https://www.youtube.com/watch', 'https://youtube.com/watch', ]
-        wtm = 'https://youtu.be/'
-        pt = 'https://www.youtube.com/playlist'
+        wtw = ['www.youtube.com/watch', 'youtube.com/watch']
+        wtm = 'youtu.be/'
+        pt = 'www.youtube.com/playlist'
         if wtw[0] in gurl_dw or wtw[1] in gurl_dw:
             download_itag = request.form['download']
             try:
@@ -136,7 +135,7 @@ def download_page():
 @app.route('/facebook_download', methods=['POST', 'GET'])
 def facebook_download():
     fileName = time.strftime("%d%m%Y-%H%M%S")
-    url_fb = 'https://www.facebook.com/'
+    url_fb = 'www.facebook.com/'
     if request.method == 'POST':
         url = request.form['fburl']
         resolution = request.form['sdhd']
@@ -179,7 +178,6 @@ def extract_url(html, quality):
     url = url.replace('hd_src:"', '')
     url = url.replace('sd_src:"', '')
     url = url.replace('"', "")
-    print(url)
     return url
 
 
@@ -195,7 +193,7 @@ def delete_downloaded_video():
     timestr = time.strftime("%d%m%Y-%H%M%S")
     dir_path = os.path.dirname(os.path.realpath(__file__))
     for file in os.listdir(dir_path):
-        if file.endswith(".mp4") and file.startswith(str(int(timestr[0:2]) - 1)):
+        if file.endswith(".mp4") and file.startswith(str(int(timestr[0:2]) - 2)):
             print(file)
             os.remove(file)
 
