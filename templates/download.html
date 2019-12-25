@@ -12,8 +12,8 @@
 {% elif wtpt=='pt' %}
     <a href="" download>Download</a>
 {% elif wtpt=='fb' %}
-    <a href="{{ url_for('download', file_name='FacebookVideo.mp4') }}">Play</a><br><br>
-    <a href="{{ url_for('download', file_name='FacebookVideo.mp4') }}" download>Download</a>
+    <a href="{{ url_for('download', file_name=filename) }}">Play</a><br><br>
+    <a href="{{ url_for('download', file_name=filename) }}" download>Download</a>
 {% endif %}
 </body>
 </html>
