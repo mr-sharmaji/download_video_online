@@ -41,117 +41,138 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="title">Download Videos Efficiently.</h2>
-                <br>
-                <div class="card card-nav-tabs">
-                    <div class="card-header card-header-primary">
-                        <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
-                        <div class="nav-tabs-navigation">
-                            {% if eval==1 %}
-                                <div class="alert alert-danger">
-                                    <div class="container">
-                                        <div class="alert-icon">
-                                            <i class="material-icons">error_outline</i>
-                                        </div>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                                        </button>
-                                        <b>Error:</b> <span
-                                            class="font-weight-bold">Invalid URL or Video isn't Available!</span>
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% if evalfb==1 %}
-                                <div class="alert alert-danger">
-                                    <div class="container">
-                                        <div class="alert-icon">
-                                            <i class="material-icons">error_outline</i>
-                                        </div>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                                        </button>
-                                        <b>Error:</b> <span
-                                            class="font-weight-bold">Invalid URL or Video isn't Available!</span>
-                                    </div>
-                                </div>
-                            {% endif %}
-                            <div class="nav-tabs-wrapper">
-                                <ul class="nav nav-tabs" data-tabs="tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#profile" data-toggle="tab">
-                                            <i class="w3-large fab fa-youtube"></i>
-                                            &nbsp; YouTube
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#messages" data-toggle="tab">
-                                            <i class="w3-large fab fa-facebook"></i>
-                                            &nbsp; FaceBook
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#settings" data-toggle="tab">
-                                            <i class="w3-large far fa-star"></i>
-                                            &nbsp; HotStar
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-md-10 ml-auto mr-auto">
+                <div class="card card-raised card-form-horizontal">
                     <div class="card-body ">
-                        <br>
-                        <div class="tab-content text-center">
-                            <div class="tab-pane active" id="profile">
-
-                                <form method=POST action='{{ url_for('result_page') }}'>
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-9 col-sm-4">
-                                            <div class="form-group has-default">
-                                                <input type="url" class="form-control" placeholder="Enter Your URL"
-                                                       name="url" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-4">
-                                            <input type=submit value=Search
-                                                   class="btn btn-primary btn-round btn-lg btn-block">
-                                        </div>
-                                    </div>
-                                </form>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-9 col-sm-4 py-2">
+                                <h4 class="text-dark font-weight-bold">Download YouTube Videos & Playlist Videos:</h4>
                             </div>
-                            <div class="tab-pane" id="messages">
-                                <form method=POST action='{{ url_for('facebook_download') }}'>
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-6 col-sm-4 d-inline">
-                                            <div class="form-group has-default">
-                                                <input type="url" class="form-control" placeholder="Enter Your URL"
-                                                       name="fburl" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-4 d-inline">
-                                            <select name="sdhd" class="select selectpicker"
-                                                    data-style="select-with-transition"
-                                                    title="Choose Resolution" data-size="7" required>
-                                                <option value="sd">SD</option>
-                                                <option value="hd">HD</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-4 d-inline">
-                                            <input type=submit value=Search
-                                                   class="btn btn-primary btn-round btn-lg btn-block">
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="col-lg-3 col-sm-4 py-2">
+                                <a href="{{ url_for('youtube') }}" class="btn btn-round btn-block btn-youtube font-weight-bold">YouTube</a>
                             </div>
-                            <div class="tab-pane" id="settings">
-
+                            <hr class="my-4">
+                            <div class="col-lg-9 col-sm-4 py-2">
+                                <h4 class="text-dark font-weight-bold">Download FaceBook Videos:</h4>
                             </div>
-
+                            <div class="col-lg-3 col-sm-4 py-2">
+                                <a href="{{ url_for('youtube') }}" class="btn btn-round btn-block btn-facebook font-weight-bold">FaceBook</a>
+                            </div>
                         </div>
-                        <br>
                     </div>
                 </div>
-                <!-- End Tabs with icons on Card -->
             </div>
+            {#                <div class="card card-nav-tabs">#}
+            {#                    <div class="card-header card-header-primary">#}
+            {#                        <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->#}
+            {#                        <div class="nav-tabs-navigation">#}
+            {#                            {% if eval==1 %}#}
+            {#                                <div class="alert alert-danger">#}
+            {#                                    <div class="container">#}
+            {#                                        <div class="alert-icon">#}
+            {#                                            <i class="material-icons">error_outline</i>#}
+            {#                                        </div>#}
+            {#                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+            {#                                            <span aria-hidden="true"><i class="material-icons">clear</i></span>#}
+            {#                                        </button>#}
+            {#                                        <b>Error:</b> <span#}
+            {#                                            class="font-weight-bold">Invalid URL or Video isn't Available!</span>#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                            {% endif %}#}
+            {#                            {% if evalfb==1 %}#}
+            {#                                <div class="alert alert-danger">#}
+            {#                                    <div class="container">#}
+            {#                                        <div class="alert-icon">#}
+            {#                                            <i class="material-icons">error_outline</i>#}
+            {#                                        </div>#}
+            {#                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+            {#                                            <span aria-hidden="true"><i class="material-icons">clear</i></span>#}
+            {#                                        </button>#}
+            {#                                        <b>Error:</b> <span#}
+            {#                                            class="font-weight-bold">Invalid URL or Video isn't Available!</span>#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                            {% endif %}#}
+            {#                            <div class="nav-tabs-wrapper">#}
+            {#                                <ul class="nav nav-tabs" data-tabs="tabs">#}
+            {#                                    <li class="nav-item">#}
+            {#                                        <a class="nav-link active" href="#profile" data-toggle="tab">#}
+            {#                                            <i class="w3-large fab fa-youtube"></i>#}
+            {#                                            &nbsp; YouTube#}
+            {#                                        </a>#}
+            {#                                    </li>#}
+            {#                                    <li class="nav-item">#}
+            {#                                        <a class="nav-link" href="#messages" data-toggle="tab">#}
+            {#                                            <i class="w3-large fab fa-facebook"></i>#}
+            {#                                            &nbsp; FaceBook#}
+            {#                                        </a>#}
+            {#                                    </li>#}
+            {#                                    <li class="nav-item">#}
+            {#                                        <a class="nav-link" href="#settings" data-toggle="tab">#}
+            {#                                            <i class="w3-large far fa-star"></i>#}
+            {#                                            &nbsp; HotStar#}
+            {#                                        </a>#}
+            {#                                    </li>#}
+            {#                                </ul>#}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                    <div class="card-body ">#}
+            {#                        <br>#}
+            {#                        <div class="tab-content text-center">#}
+            {#                            <div class="tab-pane active" id="profile">#}
+            {#                                <a href="{{ url_for('youtube') }}" class="btn btn-round btn-youtube">Youtube</a>#}
+            {#                                <form method=POST action='{{ url_for('result_page') }}'>#}
+            {#                                    <div class="row justify-content-center">#}
+            {#                                        <div class="col-lg-9 col-sm-4">#}
+            {#                                            <div class="form-group has-default">#}
+            {#                                                <input type="url" class="form-control" placeholder="Enter Your URL"#}
+            {#                                                       name="url" required>#}
+            {#                                            </div>#}
+            {#                                        </div>#}
+            {#                                        <div class="col-lg-3 col-sm-4">#}
+            {#                                            <input type=submit value=Search#}
+            {#                                                   class="btn btn-primary btn-round btn-lg btn-block">#}
+            {#                                        </div>#}
+            {#                                    </div>#}
+            {#                                </form>#}
+            {#                            </div>#}
+            {#                            <div class="tab-pane" id="messages">#}
+            {#                                <a href="{{ url_for('facebook') }}" class="btn btn-round btn-facebook">Facebook</a>#}
+            {#                                <form method=POST action='{{ url_for('facebook_download') }}'>#}
+            {#                                    <div class="row justify-content-center">#}
+            {#                                        <div class="col-lg-6 col-sm-4 d-inline">#}
+            {#                                            <div class="form-group has-default">#}
+            {#                                                <input type="url" class="form-control" placeholder="Enter Your URL"#}
+            {#                                                       name="fburl" required>#}
+            {#                                            </div>#}
+            {#                                        </div>#}
+            {#                                        <div class="col-lg-3 col-sm-4 d-inline">#}
+            {#                                            <select name="sdhd" class="select selectpicker"#}
+            {#                                                    data-style="select-with-transition"#}
+            {#                                                    title="Choose Resolution" data-size="7" required>#}
+            {#                                                <option value="sd">SD</option>#}
+            {#                                                <option value="hd">HD</option>#}
+            {#                                            </select>#}
+            {#                                        </div>#}
+            {#                                        <div class="col-lg-3 col-sm-4 d-inline">#}
+            {#                                            <input type=submit value=Search#}
+            {#                                                   class="btn btn-primary btn-round btn-lg btn-block">#}
+            {#                                        </div>#}
+            {#                                    </div>#}
+            {#                                </form>#}
+            {#                            </div>#}
+            {#                            <div class="tab-pane" id="settings">#}
+            {##}
+            {#                            </div>#}
+            {##}
+            {#                        </div>#}
+            {#                        <br>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <!-- End Tabs with icons on Card -->#}
         </div>
     </div>
 </div>

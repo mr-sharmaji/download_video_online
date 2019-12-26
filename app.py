@@ -23,6 +23,16 @@ def index_page():
     return render_template('index.html')
 
 
+@app.route('/youtube')
+def youtube():
+    return render_template('youtube.html')
+
+
+@app.route('/facebook')
+def facebook():
+    return render_template('Facebook.html')
+
+
 @app.route('/results', methods=['GET', 'POST'])
 def result_page():
     global gurl_dw
@@ -41,16 +51,16 @@ def result_page():
             # except KeyError:
             #     return render_template('index.html', eval=1)
             except pytube.exceptions.RegexMatchError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             return render_template('result.html', yt=yt, wtpt='wt')
         elif wtm in url_dw:
             murl = 'https://www.youtube.com/watch?v=' + url_dw.split('.be/')[1]
             try:
                 yt = get_watch_stream(murl)
             except KeyError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             except pytube.exceptions.RegexMatchError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             return render_template('result.html', yt=yt, wtpt='wt')
         elif pl in url_dw:
             try:
@@ -66,16 +76,16 @@ def result_page():
                 # streamListDictList = [(k, v) for k, v in meta.items()]
                 # print(streamListDictList)
             except KeyError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             except pytube.exceptions.RegexMatchError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             except pytube.exceptions.VideoUnavailable:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             return render_template('result.html', streamListDictList=streamListDictList, wtpt='pt')
         else:
-            return render_template('index.html', eval=1)
+            return render_template('youtube.html', eval=1)
     else:
-        return render_template('index.html', eval=1)
+        return render_template('youtube.html', eval=1)
 
 
 @app.route('/download', methods=['GET', 'POST'])
@@ -91,9 +101,9 @@ def download_page():
             try:
                 get_watch_stream(gurl_dw).streams.get_by_itag(download_itag).download(filename=fileName)
             except KeyError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             except pytube.exceptions.RegexMatchError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             return render_template('download.html', wtpt='wt',filename=fileName+'.mp4')
         elif wtm in gurl_dw:
             download_itag = request.form['download']
@@ -101,9 +111,9 @@ def download_page():
             try:
                 get_watch_stream(murl).streams.get_by_itag(download_itag).download(filename=fileName)
             except KeyError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             except pytube.exceptions.RegexMatchError:
-                return render_template('index.html', eval=1)
+                return render_template('youtube.html', eval=1)
             return render_template('download.html', wtpt='wt',filename=fileName+'.mp4')
         elif pt in gurl_dw:
             if request.form["download"] == "Download":
@@ -114,22 +124,22 @@ def download_page():
                 try:
                     get_watch_stream(download_url).streams.get_by_itag(download_itag).download()
                 except KeyError:
-                    return render_template('index.html', eval=1)
+                    return render_template('youtube.html', eval=1)
                 except pytube.exceptions.RegexMatchError:
-                    return render_template('index.html', eval=1)
+                    return render_template('youtube.html', eval=1)
                 return render_template('download.html', wtpt='pt')
             elif request.form["download"] == "Download All":
                 try:
                     get_playlist_urls(gurl_dw).download_all()
                 except KeyError:
-                    return render_template('index.html', eval=1)
+                    return render_template('youtube.html', eval=1)
                 except pytube.exceptions.RegexMatchError:
-                    return render_template('index.html', eval=1)
+                    return render_template('youtube.html', eval=1)
                 return render_template('download.html', wtpt='pt')
         else:
-            return render_template('index.html', eval=1)
+            return render_template('youtube.html', eval=1)
     else:
-        return render_template('index.html', eval=1)
+        return render_template('youtube.html', eval=1)
 
 
 @app.route('/facebook_download', methods=['POST', 'GET'])
@@ -145,14 +155,14 @@ def facebook_download():
             try:
                 download_Video(url, resolution,fileName)
             except TypeError:
-                return render_template('index.html', evalfb=1)
+                return render_template('Facebook.html', evalfb=1)
             return render_template('download.html', wtpt='fb',filename=fileName+'.mp4')
             # else:
             #     return render_template('index.html', evalfb=1)
         else:
-            return render_template('index.html', evalfb=1)
+            return render_template('Facebook.html', evalfb=1)
     else:
-        return render_template('index.html', evalfb=1)
+        return render_template('Facebook.html', evalfb=1)
 
 
 @app.route('/file-download/<file_name>')
