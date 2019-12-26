@@ -135,20 +135,20 @@ def download_page():
 @app.route('/facebook_download', methods=['POST', 'GET'])
 def facebook_download():
     fileName = time.strftime("%d%m%Y-%H%M%S")
-    url_fb = 'www.facebook.com/'
+    url_fb = ['www.facebook.com','m.facebook.com']
     if request.method == 'POST':
         url = request.form['fburl']
         resolution = request.form['sdhd']
-        if url_fb in url:
-            url_fb_videos = url_fb + url.split('/videos')[0].split('.com/')[1] + '/videos/'
-            if url_fb_videos in url:
-                try:
-                    download_Video(url, resolution,fileName)
-                except TypeError:
-                    return render_template('index.html', evalfb=1)
-                return render_template('download.html', wtpt='fb',filename=fileName+'.mp4')
-            else:
+        if url_fb[0] in url or url_fb[1] in url:
+            # url_fb_videos = url_fb + url.split('/videos')[0].split('.com/')[1] + '/videos/'
+            # if url_fb_videos in url:
+            try:
+                download_Video(url, resolution,fileName)
+            except TypeError:
                 return render_template('index.html', evalfb=1)
+            return render_template('download.html', wtpt='fb',filename=fileName+'.mp4')
+            # else:
+            #     return render_template('index.html', evalfb=1)
         else:
             return render_template('index.html', evalfb=1)
     else:
@@ -188,7 +188,6 @@ def download_Video(url, resolution,filename):
     urllib.request.urlretrieve(file_url, path)
 
 
-@app.before_first_request
 def delete_downloaded_video():
     timestr = time.strftime("%d%m%Y-%H%M%S")
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -199,5 +198,5 @@ def delete_downloaded_video():
 
 
 if __name__ == '__main__':
-
+    delete_downloaded_video()
     app.run(debug=True)
