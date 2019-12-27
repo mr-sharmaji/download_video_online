@@ -36,6 +36,7 @@ def facebook():
 @app.route('/results', methods=['GET', 'POST'])
 def result_page():
     global gurl_dw
+    yt = list()
     wtpt = ''
     streamListDict = dict()
     streamListDictList = list()
@@ -47,7 +48,11 @@ def result_page():
         pl = 'www.youtube.com/playlist'
         if wtw[0] in url_dw or wtw[1] in url_dw:
             try:
-                yt = get_watch_stream(url_dw)
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    meta = ydl.extract_info(
+                        url_dw, download=False)
+                    yt.append(meta)
+                print(yt)
             # except KeyError:
             #     return render_template('index.html', eval=1)
             except pytube.exceptions.RegexMatchError:
@@ -93,7 +98,7 @@ def download_page():
     wtpt = ''
     fileName = time.strftime("%d%m%Y-%H%M%S")
     if request.method == 'POST':
-        wtw = ['www.youtube.com/watch', 'youtube.com/watch']
+        wtw = ['www.youtube.com/watch', 'm.youtube.com/watch']
         wtm = 'youtu.be/'
         pt = 'www.youtube.com/playlist'
         if wtw[0] in gurl_dw or wtw[1] in gurl_dw:
