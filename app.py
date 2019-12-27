@@ -61,7 +61,11 @@ def result_page():
         elif wtm in url_dw:
             murl = 'https://www.youtube.com/watch?v=' + url_dw.split('.be/')[1]
             try:
-                yt = get_watch_stream(murl)
+                # yt = get_watch_stream(murl)
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    meta = ydl.extract_info(
+                        murl, download=False)
+                    yt.append(meta)
             except KeyError:
                 return render_template('youtube.html', eval=1)
             except pytube.exceptions.RegexMatchError:
@@ -173,6 +177,11 @@ def facebook_download():
 @app.route('/file-download/<file_name>')
 def download(file_name):
     return send_file(file_name, attachment_filename=file_name)
+
+
+@app.errorhandler(404)
+def invalid_route(e):
+    return
 
 
 def get_watch_stream(url):
