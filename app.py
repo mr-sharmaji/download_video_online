@@ -33,6 +33,11 @@ def facebook():
     return render_template('Facebook.html')
 
 
+@app.route('/hotstar')
+def hotstar():
+    return render_template('Hotstar.html')
+
+
 @app.route('/results', methods=['GET', 'POST'])
 def result_page():
     global gurl_dw
